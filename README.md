@@ -5,15 +5,15 @@
 This repository contains a series of scripts and code pieces designed to [briefly describe the main function]. Below is a list of the main components and their roles in the project:
 
 - `hw_score_predict.ipynb`:
+'''python
 data_path = "dataset/dataset/*.html"
-
 code2convos = dict()
 total_code_response_list = []
 pbar = tqdm.tqdm(sorted(list(glob(data_path))))
 for path in pbar:
-    code_block_count = 0
-    file_code = os.path.basename(path).split(".")[0]
-    with open(path, "r", encoding="latin1") as fh:
+        code_block_count = 0
+        file_code = os.path.basename(path).split(".")[0]
+        with open(path, "r", encoding="latin1") as fh:
         html_page = fh.read()
         soup = BeautifulSoup(html_page, "html.parser")
 
@@ -43,7 +43,8 @@ for path in pbar:
         total_code_response_list.append((file_code, code_block_count))
         
         code2convos[file_code] = convo_texts
-total_code_response_df = pd.DataFrame(total_code_response_list, columns=['code', 'code_responses'])
+        total_code_response_df = pd.DataFrame(total_code_response_list, columns=['code', 'code_responses'])
+
 
 - `script_name_2.py`: Description of this script's functionality.
 - [Additional scripts and their descriptions]
