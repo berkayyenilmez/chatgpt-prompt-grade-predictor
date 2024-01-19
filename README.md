@@ -905,11 +905,15 @@ The script applies DBSCAN clustering to the scaled dataset and visualizes the re
 
 
 
-The project is structured to [explain how the different scripts and code pieces are linked, e.g., data flow or execution order].
-
 ## Methodology
 
-Here we provide a high-level explanation of the methodology employed in the project. This section covers the theoretical basis, the algorithms or models used, and any significant reasons for choosing specific approaches. It also outlines the solutions offered by the project, addressing the problems or challenges the project is intended to solve.
+In this project, we developed a multifaceted approach to predict student homework scores by analyzing their interactions with an ChatGPT. Initially, we identified the similarity between user prompts and known homework questions, assigning weights to these prompts based on their relative importance to the overall score. We called this weighted_target. Recognizing the significance of code-writing skills in the assessment, we also added the number of code blocks returned by the ChatGPT in our feature set. And this is called code_responses in the feature_set.
+To capture the essence of student-chatbot interactions, we implemented a bag-of-words model, selecting the 500 most frequent words from high-scoring students (those with scores above 97) to represent their responses. This model, combined with other features such as the number of user prompts, average prompt length, code_responses, and a weighted_total, formed our initial dataset.
+We experimented with several predictive models, including neural networks, random forests, and decision trees. These models were chosen for their robustness in handling outliers and their effectiveness in regression tasks. Despite our efforts, the initial models did not yield substantial improvements in prediction accuracy.
+To enhance the feature set, we introduced a novel similarity metric, comparing code responses that students got from ChatGPT with a standard answer key using TF-IDF analysis. This additional feature provided a quantitative measure of how closely the content of chatbot responses aligned with ideal answers.
+Upon integrating this new feature, we re-evaluated our models and found that the random forest algorithm provided the lowest mean squared error, making it the most suitable choice for our predictive task. The incorporation of the answer key similarity feature was pivotal in refining our model's accuracy and will serve as the foundation for future enhancements.
+
+
 
 ## Results
 
@@ -923,21 +927,18 @@ Figures and tables illustrating our results are included below:
 ![Figure 1 Description](path/to/figure1.png)
 *Figure 1: Caption describing the content and significance of the figure.*
 
-| Table 1        | Column 1       | Column 2       |
+| RESULTS        | RMSE           | Column 2       |
 |----------------|----------------|----------------|
-| Row 1          | Data 1         | Data 2         |
-| Row 2          | Data 3         | Data 4         |
+| Random Forest  | 11.009         | Data 2         |
+| Neural Network |          | Data 4         |
 *Table 1: Caption explaining what the table shows.*
 
 ## Team Contributions
 
-- **Team Member 1**: Detailed contributions.
-- **Team Member 2**: Detailed contributions.
-- [Additional team members and their contributions]
+- **Ali Fehmi Yıldız 1**: Adding new features and tring on different models.
+- **Berkay Yenilmez  2**: Adding new features and tring on different models.
+- **Irfaan Bin Ahmad  3**: Clustering.
+- **Muhammed Emir İnce 4**: Adding new features and tring on different models.
 
-(Replace the placeholders with the actual names and contributions of the team members.)
 
-## Additional Sections
-
-You may also include additional sections such as 'Installation', 'Usage', 'Dependencies', 'Contributing', 'License', and 'Acknowledgments' as needed to provide more context and information about your project.
 
