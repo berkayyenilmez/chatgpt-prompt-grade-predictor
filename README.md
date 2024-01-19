@@ -59,7 +59,7 @@ Explanation: The provided Python code block is part of a script that processes H
                     user_prompts.append(conv["text"])
             code2prompts[code] = user_prompts    
 
-Explanition: Buraya aciklama gelicek
+Explanition: For each html code in dataset this code creates a dictionary entry for them and put the corresponding prompts for that user.
 
         import re
         from sklearn.feature_extraction.text import TfidfVectorizer
@@ -121,7 +121,7 @@ Explanition: Buraya aciklama gelicek
         questions_TF_IDF = questions_TF_IDF[english_feature_columns]
         questions_TF_IDF
 
-Explanation: buraya aciklama gelicek
+Explanation: For each prompt in each html element and for each question in assignment this code creates a word vector each row corresponds to the question in the assignment and each feature(column) is the unique word in both assignment questions, user prompts.
 
         code2prompts_tf_idf = dict()
         for code, user_prompts in code2prompts.items():
@@ -141,13 +141,13 @@ Explanation: buraya aciklama gelicek
         
             code2prompts_tf_idf[code] = prompts_TF_IDF
 
-Explanation: Buraya acikalam gelicek
+Explanation: This creates a unique entry for each html code that contains the prompts of the user as row and words used in all prompts and questions as column
         
         code2cosine = dict()
         for code, user_prompts_tf_idf in code2prompts_tf_idf.items():
             code2cosine[code] = pd.DataFrame(cosine_similarity(questions_TF_IDF,user_prompts_tf_idf))
 
-Explanation: buraya aciklama gelicek
+Explanation: code2cosine dictionary contains the calculated cosine distances for each prompt that html has
 
         code2questionmapping = dict()
         for code, cosine_scores in code2cosine.items():
@@ -170,7 +170,7 @@ Explanation: buraya aciklama gelicek
         question_mapping_scores['weighted_total'] = question_mapping_scores[[f'Q_{i}' for i in range(len(weights))]].sum(axis=1)
         question_mapping_scores = question_mapping_scores[['code', 'weighted_total']]
 
-Explanation: buraya aciklama
+Explanation: question_mapping_scores is a dataframe where for each prompt the student asked to gpt the cosine similarity is calculated and the maximum is taken so each column represent the maximum similarity for the corresponding question in the assignment considering all the prompts user asked.
 
         code2features = defaultdict(lambda : defaultdict(int))
         
@@ -197,7 +197,7 @@ Explanation: buraya aciklama
         
                 code2features[code]["prompt_avg_chars"] /= code2features[code]["#user_prompts"]   
 
-Explanation: aciklama
+Explanation: this code creates a dataframe that has number of occurrences user prompts, error etc.
         
         # reading the scores
         scores = pd.read_csv("scores.csv", sep=",")
@@ -208,14 +208,14 @@ Explanation: aciklama
         std_dev = scores["grade"].std()
         mean = scores["grade"].mean()
 
-Explanation: aciklama
+Explanation: reads the scores of the data
 
         temp_df = pd.merge(df, scores, on='code', how="left")
         temp_df = pd.merge(temp_df, total_code_response_df, on='code', how='left')
         temp_df.dropna(inplace=True)
         temp_df.drop_duplicates("code",inplace=True, keep="first")
 
-Explanation: aciklama
+Explanation: temp_df merged by the vector matrix and the features we have added. The total_code_response_df stores the amount of responses by chatgpt that has codeblock, thus it has the following features; code	#user_prompts	#error	#no	#entropy	prompt_avg_chars	weighted_total	code_responses
 
         regressor = DecisionTreeRegressor(random_state=0,criterion='squared_error', max_depth=10)
         regressor.fit(X_train, y_train)
@@ -230,7 +230,7 @@ Explanation: aciklama
         print("R2 Train:", r2_score(y_train,y_train_pred))
         print("R2 TEST:", r2_score(y_test,y_test_pred))
 
-Explanation: aciklama
+Explanation: this is the first model in our code, basic decision tree prediction based on the data in the temp_df and scores
 
         import re
         import string
@@ -289,7 +289,7 @@ Explanation: aciklama
             print(f"{word}: {count}")
         len(sorted_vocab)
 
-Explanation: aciklama
+Explanation: This code block creates a response word vector based on the responses of histories that is graded higher than 97 and creates a vocabulary that contains unique words as keys and number of occurrence of that word as key.
 
         flattened_data = []
         for code, convos in code2convos.items():
@@ -337,7 +337,7 @@ Explanation: aciklama
         
         train_data, test_data, train_labels, test_labels = train_test_split(X, y, test_size=0.2, random_state=42)
 
-Explanation: aciklama
+Explanation: This code block merges the previous temp_df and the responses that the user receieved from chatgpt then creates training data and test data based on the merged dataframe.
 
         from sklearn.feature_extraction.text import CountVectorizer
         from sklearn.model_selection import train_test_split
@@ -402,7 +402,7 @@ Explanation: aciklama
         print(predictions)
         print(f"RMSE: {rmse}")
 
-Explanation: aciklama
+Explanation: The vocabulary we created based on the responses of histories that is graded by 98 or more is used to train the BagOfWords vectorizer. Then the train and test data is tranformed based on the results of the BagOfWords vectorizer which is trained by top 500 occurring words. Then we merge the created feature by this transform with temp_df and feed it to the neural network model
 
         from sklearn.ensemble import RandomForestRegressor
         from sklearn.model_selection import cross_val_score, KFold
@@ -426,7 +426,7 @@ Explanation: aciklama
         print(f"Random Forest RMSE: {rf_rmse}")
         print(f"Random Forest R2 Score: {rf_r2}")
 
-Explanation: aciklama
+Explanation: We try different model (randomforest) to evaluate.
 
         from sklearn.model_selection import KFold
         from sklearn.metrics import mean_squared_error, r2_score
@@ -477,7 +477,7 @@ Explanation: aciklama
         print(rmses)
         print(f"Average Random Forest RMSE across all folds: {average_rmse}")
 
-Explanation: aciklama
+Explanation: Here we are trying to see if the performance depends on the split or not. To see this we are using k-fold with n_split 5 and we can see how diffrent combination of splits affects the result.
 
         codes_to_keep = set(temp_df['code'])
         
@@ -490,7 +490,7 @@ Explanation: aciklama
                 code_responses.append(conv)
         print(len(code_responses))
 
-Explanation: aciklama
+Explanation: Here we take the responses in gpt histories that contains specifically the code block and append it to code_responses array.
 
         from sklearn.feature_extraction.text import TfidfVectorizer
         from sklearn.feature_extraction import text
@@ -517,7 +517,7 @@ Explanation: aciklama
         
         answer_key_TF_IDF = pd.DataFrame(vectorizer.transform(answer_key).toarray(), columns=vectorizer.get_feature_names_out())
 
-Explanation: aciklama
+Explanation: we create a vector matrix out of answer_key and code_responses of the users in answer_key_TF_IDF. Each row corresponds to the question in answer_key which is based on the code answers of a history graded 100 and each column is a word (feature) in all the code responses of chat histories.
 
         import re
         from nltk.stem import WordNetLemmatizer
@@ -578,7 +578,7 @@ Explanation: aciklama
         english_feature_columns = [col for col in answer_key_TF_IDF.columns if re.fullmatch(r'[a-zA-Z]+', col)]
         answer_key_TF_IDF = answer_key_TF_IDF[english_feature_columns]
 
-Explanation: aciklama
+Explanation: Here we preprocess the data by eliminating non-english, numerical etc. words.
 
         code2answers_tf_idf = dict()
         
@@ -611,7 +611,7 @@ Explanation: aciklama
         response_mapping_scores.rename(columns={i: f"Q_{i}" for i in range(len(questions))}, inplace=True)
         response_mapping_scores.rename(columns={"index" : "code"}, inplace=True)
 
-Explanation: aciklama
+Explanation: response_mapping_scores is a dataframe that has each history as a row code and corresponding maximum cosine distance to the question in the column (questions in answer_key).
 
         codes_in_response_mapping = set(response_mapping_scores['code'])
         
@@ -624,7 +624,7 @@ Explanation: aciklama
         response_mapping_scores2 = response_mapping_scores.drop('code', axis=1)
         X_train, X_test, y_train, y_test = train_test_split(response_mapping_scores2, grades, test_size=0.2, random_state=42)
 
-Explanation: aciklama
+Explanation: Here we create test and train data out of the mapping scores and grades
 
         import numpy as np
         from sklearn.ensemble import RandomForestRegressor
@@ -652,7 +652,7 @@ Explanation: aciklama
         print(f"Random Forest RMSE: {rf_rmse}")
         print(f"Random Forest R2 Score: {rf_r2}")
 
-Explanation: 
+Explanation: using randomforest model to predict grades.
 
 
 - `script_name_2.py`: Description of this script's functionality.
