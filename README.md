@@ -934,10 +934,10 @@ Figures and tables illustrating our results are included below:
 
 ## Team Contributions
 
-- **Ali Fehmi Yıldız 1**: Adding new features and tring on different models.
-- **Berkay Yenilmez  2**: Adding new features and tring on different models.
+- **Ali Fehmi Yıldız 1**: Adding new features and trying on different models.
+- **Berkay Yenilmez  2**: Adding new features and trying on different models.
 - **Irfaan Bin Ahmad  3**: Clustering.
-- **Muhammed Emir İnce 4**: Adding new features and tring on different models.
+- **Muhammed Emir İnce 4**: Adding new features and trying on different models.
 
 
 
