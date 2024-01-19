@@ -919,19 +919,18 @@ Upon integrating this new feature, we re-evaluated our models and found that the
 
 Our experiments yielded the following key findings:
 
-- **Finding 1**: A brief explanation supported by visuals (if applicable).
-- **Finding 2**: Summary of the result and its implications.
+- **Finding **: Random Forest gives the best performance with 8.55 RMSE and 0.46 R2 score.
+
 
 Figures and tables illustrating our results are included below:
 
-![Figure 1 Description](path/to/figure1.png)
-*Figure 1: Caption describing the content and significance of the figure.*
 
-| RESULTS        | RMSE           | Column 2       |
+
+| RESULTS        | RMSE           | R2       |
 |----------------|----------------|----------------|
-| Random Forest  | 11.009         | Data 2         |
-| Neural Network |          | Data 4         |
-*Table 1: Caption explaining what the table shows.*
+| Random Forest  | 8.55           | 0.46        |
+
+
 
 ## Team Contributions
 
