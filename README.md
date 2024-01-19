@@ -1,4 +1,4 @@
-# Project Title
+# PREDICTING HOMEWORK SCORES
 
 ## Overview of the Repository
 
